@@ -39,8 +39,8 @@ jobs:
           # extensions: mbstring, xml, bcmath, curl, pgsql
           ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=512M
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      # - name: Install dependencies
+      #   run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Copy .env file
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
