@@ -1,1 +1,32 @@
 
+name: workflow for laravel app
+on: 
+  push: 
+    branches:
+        - main
+jobs: 
+  install:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env: 
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: laravel
+    steps:
+      - name: setup environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Set up database
+        run: php artisan migrate --force
+
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: install dependencies
+        run: composer install
+
+      - name: test application
+        run: php artisan test
